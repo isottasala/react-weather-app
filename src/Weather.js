@@ -1,8 +1,26 @@
-import React from "react";
+import React, {useState} from "react";
+import axios from "axios";
 import"./Weather.css";
 
 export default function Weather (){
-    return (
+const [weatherData, setWeatherData]= useState({ready: false});
+function handleResponse(response){
+    console.log(response.data);
+setWeatherData({
+    ready:true,
+    temperature: response.data.main.temp,
+    description:response.data.weather[0].description,
+    wind: response.data.wind.speed,
+    time: "Sunday, 16:39",
+    humidity:response.data.main.humidity,
+    city: response.data.name,
+    iconUrl:`https://ssl.gstatic.com/onebox/weather/64/cloudy.png`,
+    
+});
+}
+
+if (weatherData.ready){
+return (
     <div className="Weather">
 <form> 
     <div className="row">
@@ -17,27 +35,34 @@ export default function Weather (){
     </div>
     </div>
     </form>
-<h1>New York</h1>
+<h1>{weatherData.city}</h1>
 <ul>
-<li>Sunday, 8:00 AM</li>
-<li>Cloudy</li></ul>
+<li>{weatherData.time}</li>
+<li className="text-capitalize">{weatherData.description}</li></ul>
 <div className="row mt-3">
     <div className="col-6">
-    <div  claaName="clearfix">
-        <img src="https://ssl.gstatic.com/onebox/weather/64/cloudy.png"
-        alt="Cloudy"
+ 
+        <img src={weatherData.iconUrl}
+        alt={weatherData.description}
         className="float-left"></img>
-   </div>
+
    <div className="float-left">
-    <span className="temperature"> 6</span>
+    <span className="temperature">{Math.round(weatherData.temperature)}</span>
     <span className="unit">ºC</span>
      </div>
      </div>
 <div className="col-6">
-    <ul><li>Precipitation: 1% </li>
-    <li>Humidity: 64% </li>
-   <li>Wind: 21 km/hr </li></ul>
+    <ul>
+    <li>Humidity: {weatherData.humidity}% </li>
+   <li>Wind: {weatherData.wind} km/hr </li></ul>
 </div>
     </div>
     </div>);
+} else {
+const apiKey=`19e46ed21fd5be02cd8dd3836eaacd85`;
+let apiUrl= `http://api.openweathermap.org/data/2.5/weather?q=New York&appid=${apiKey}&units=metric`;
+axios.get(apiUrl).then(handleResponse);
+
+return "loading..";
+}
 }
