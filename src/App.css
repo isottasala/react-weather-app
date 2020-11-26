@@ -7,3 +7,7 @@
   font-size: 11px;
   margin: 10px 0;
 }
+body {
+  font-family: arial, helvetica, sans-serif;
+  background-image: url("https://images.unsplash.com/photo-1495757450029-09dbedacbc36?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1789&q=80");
+}
