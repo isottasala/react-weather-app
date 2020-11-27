@@ -18,14 +18,14 @@ setWeatherData({
     date: new Date(response.data.dt * 1000),
     humidity:response.data.main.humidity,
     city: response.data.name,
-          icon: response.data.weather[0].icon,
+    icon: response.data.weather[0].icon,     
     
 });
 }
 
 function search(){
 const apiKey=`19e46ed21fd5be02cd8dd3836eaacd85`;
-let apiUrl= `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+let apiUrl= `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
 axios.get(apiUrl).then(handleResponse);
 }
 function handleSubmit (event){
